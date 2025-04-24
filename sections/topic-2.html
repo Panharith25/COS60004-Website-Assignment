@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Assignment 1">
+        <meta name="keywords" content="HTML, CSS">
+        <meta name="author" content="Panharith Menh">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- CSS link -->
+        <link href="../styles/style.css" rel="stylesheet">
+        <link href="../styles/responsive.css" rel="stylesheet">
+        <!-- Script -->
+        <script src="../scripts/product_button.js" charset="utf-8"></script>
+        <!-- Title -->
+        <title>Gamepad | Products 1</title>
+    </head>
+
+    <body>
+        <!-- header section start-->
+        <div class="header_section">
+            <div class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="logo">
+                    <a href="../index.html"><img src="../images/logo.png" alt=""></a>
+                </div>
+                <!-- Checkbox for toggling the menu -->
+                <input type="checkbox" id="menu-toggle" class="menu-toggle">
+                <label for="menu-toggle" class="menu-icon">&#9776;</label> <!-- Hamburger icon -->
+                <nav class="navbar-collapse">
+                    <ul class="navbar-nav">
+                        <li class="nav-link"><a href="../index.html">Home</a></li>
+                        <li class="nav-link"><a href="../product.html">Products</a></li>
+                        <li class="nav-link"><a href="../enquire.html">Enquire</a></li>
+                        <li class="nav-link"><a href="../about.html">About</a></li>
+                        <li class="nav-link"><a href="../enhancements.html">Enhancements</a></li>
+                        <li class="nav-link"><a href="../reference.html">Reference</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <hr>
+        <!-- header section end-->
+        <!-- product section start -->
+        <div class="layout_padding">
+            <div class="container topic">
+                <div class="left_column">
+                    <img data-image="white" class="active" src="../images/ps5_white.png" alt="">
+                    <img data-image="black" src="../images/ps5_black.png" alt="">
+                    <img data-image="blue" src="../images/ps5_blue.png" alt="">
+                </div>
+                <div class="right_column">
+                    <div class="product_feature">
+                        <span>Playstaion Controller</span>
+                        <h1>DualSense Wireless Controller - PS5</h1>
+                        <h2>Key Features</h2>
+                        <p>Discover a deeper, highly immersive gaming experience that brings the action to life in the palms of your hands</p>
+                        <ul>
+                            <li>Controller type: Wireless controller with built-in battery</li>
+                            <li>Compatibility: Playstation 5</li>
+                            <li>Hardware: Dual actuators replace rumble motors for responsive feedback</li>
+                        </ul>
+                    </div>
+                    <div class="product_price">
+                        <span>$189</span>
+                        <a href="#" class="cart_btn">Add to cart</a>
+                    </div>
+                    <!-- Product configuration -->
+                    <div class="product_configuration">
+                        <!-- Product color -->
+                        <div class="product_color">
+                            <span>Color</span>
+                            <div class="color_choose">
+                                <div>
+                                    <input data-image="white" type="radio" id="white" name="color" value="white" checked>
+                                    <label for="white"><span><img src="../images/ps5_white.png" alt=""></span></label>
+                                </div>
+                                <div>
+                                    <input data-image="black" type="radio" id="black" name="color" value="black">
+                                    <label for="black"><span><img src="../images/ps5_black.png" alt=""></span></label>
+                                </div>
+                                <div>
+                                    <input data-image="blue" type="radio" id="blue" name="color" value="blue">
+                                    <label for="blue"><span><img src="../images/ps5_blue.png" alt=""></span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container topic">
+                <div class="product_description">
+                    <h2>Description</h2>
+                    <p>Discover a deeper, highly immersive gaming experience1 that brings the action to life in the palms of your hands. <strong>The DualSense™</strong> wireless controller offers immersive haptic feedback, dynamic adaptive triggers2 and a built-in microphone, all integrated into an iconic comfortable design.</p>
+                </div>
+            </div>
+        </div>
+        <!-- product section end -->
+        <!-- footer section start -->
+        <footer>
+            <div class="section_footer">
+                <div class="container">
+                    <div class="social_icon">
+                        <ul>
+                            <li><a href="#"><img src="../images/fb-icon.png" alt=""></a></li>
+                            <li><a href="#"><img src="../images/twitter-icon.png" alt=""></a></li>
+                            <li><a href="#"><img src="../images/linkdin-icon.png" alt=""></a></li>
+                            <li><a href="#"><img src="../images/instagram-icon.png" alt=""></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright_section">
+                <div class="container">
+                    <p class="copyright_text">
+                        <a href="https://www.swinburne.edu.au/">&copy; Swinburne University of Technology</a>
+                        <br> 
+                        <a href="mailto:someone@example.com"> Created by: Panharith Menh</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+        <!-- footer section end -->
+    </body>
+</html>

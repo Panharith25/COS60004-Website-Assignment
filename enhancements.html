@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Assignment 1">
+        <meta name="keywords" content="HTML, CSS">
+        <meta name="author" content="Panharith Menh">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- CSS link -->
+        <link href="styles/style.css" rel="stylesheet">
+        <link href="styles/responsive.css" rel="stylesheet">
+        <!-- Title -->
+        <title>Gamepad | Home</title>
+    </head>
+
+    <body>
+        <!-- header section start-->
+        <div class="header_section">
+            <div class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="logo">
+                    <a href="index.html"><img src="images/logo.png" alt=""></a>
+                </div>
+                <!-- Checkbox for toggling the menu -->
+                <input type="checkbox" id="menu-toggle" class="menu-toggle">
+                <label for="menu-toggle" class="menu-icon">&#9776;</label> <!-- Hamburger icon -->
+                <nav class="navbar-collapse">
+                    <ul class="navbar-nav">
+                        <li class="nav-link"><a href="index.html">Home</a></li>
+                        <li class="nav-link"><a href="product.html">Products</a></li>
+                        <li class="nav-link"><a href="enquire.html">Enquire</a></li>
+                        <li class="nav-link"><a href="about.html">About</a></li>
+                        <li class="nav-link"><a href="enhancements.html">Enhancements</a></li>
+                        <li class="nav-link"><a href="reference.html">Reference</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <hr>
+        <!-- header section end -->
+        <div class="enhancement_section layout_padding">
+            <div class="container">
+                <h1>Enhancement 1: Default class design for html file</h1>
+                <p>
+                    The default class design for the HTML file is a simple and clean layout that includes a header, 
+                    navigation bar, and footer. The header contains the logo and navigation links, while the footer 
+                    includes social media icons and copyright information. The main content area is designed to be 
+                    flexible and responsive, allowing for easy customization and addition of new sections as needed.
+                </p>
+                <h2>Why does it go beyond the basic requirement of this assignment?</h2>
+                <p>
+                    This design goes beyond the basic requirements of the assignment by providing a clear and organized 
+                    structure for the webpage. It allows for easy navigation and access to important information, while 
+                    also being visually appealing. The use of responsive design ensures that the layout will adapt to 
+                    different screen sizes, making it accessible to a wider audience. Additionally, the inclusion of 
+                    social media icons encourages user engagement and interaction with the brand.
+                </p>
+                <h2>Which classes are established as default html/css?</h2>
+                <ul>
+                    <li>layout_padding</li>
+                    <li>container</li>
+                    <li>row</li>
+                </ul>
+                <p>
+                    These classes are established as default HTML/CSS classes to provide a consistent layout and 
+                    styling across the webpage. The "layout_padding" class adds padding to the sections, while the 
+                    "container" class creates a responsive container for the content. The "row" class is used to 
+                    create a grid layout for the content, allowing for easy alignment and organization of elements.
+                </p>
+                <h2>Details of html file uses default class</h2>
+                <ul>
+                    <li><a href="index.html" class="enhancement_link">Index Page: </a>Index page has layout_padding, container, and row.</li>
+                    <li><a href="product.html" class="enhancement_link">Product Page: </a>Product page has layout_padding, container, and row.</li>
+                    <li><a href="enquire.html" class="enhancement_link">Enquire Page: </a>Enquire page has layout_padding, and container.</li> 
+                    <li><a href="about.html" class="enhancement_link">About Page: </a>About page has layout_padding, container, and row.</li>
+                    <li><a href="enhancements.html" class="enhancement_link">Enhancement Page: </a>Enhancement page has layout_padding, and container.</li> 
+                </ul>
+
+                <h1 class="enhance_head">Enhancement 2: Responsive Navigation Bar</h1>
+                <p>
+                    The responsive navigation bar is designed to adapt to different screen sizes, ensuring that the 
+                    menu items are easily accessible on both desktop and mobile devices. The use of a checkbox input 
+                    allows for a clean and simple toggle effect, while the CSS styles ensure that the menu is visually 
+                    appealing and user-friendly.
+                </p>
+                <h2>Why does it go beyond the basic requirement of this assignment?</h2>
+                <p>
+                    This enhancement goes beyond the basic requirements by providing a fully functional and responsive 
+                    navigation bar that improves user experience. It allows users to easily navigate through the 
+                    different sections of the website, regardless of the device they are using. The use of CSS styles 
+                    also enhances the visual appeal of the navigation bar, making it more engaging for users.
+                </p>
+                <h2>Which html/css classes are established to create navigation bar to fit smaller screen size?</h2>
+                <ul>
+                    <li>navbar-nav</li>
+                    <li>menu-toggle</li>
+                    <li>menu-icon</li>
+                    <li>navbar-collapse</li>
+                </ul>
+                <p>
+                    These classes are established to create a responsive navigation bar that fits smaller screen sizes. 
+                    The "navbar-nav" class is used to style the navigation links, while the "menu-toggle" class is 
+                    used to create the checkbox input for toggling the menu. The "menu-icon" class styles the hamburger 
+                    icon, and the "navbar-collapse" class ensures that the menu items are properly aligned and organized 
+                    when the menu is expanded.
+                </p>
+                <h2>Example CSS</h2>
+                <p>
+                    The following CSS code is used to create the responsive navigation bar:
+                    <br><br>
+                    <code>
+                        .navbar {<br>
+                            background-color: #f8f9fa;<br>
+                            padding: 10px;<br>
+                        }<br><br>
+                        .menu-toggle {<br>
+                            display: none;<br>
+                        }<br><br>
+                        @media (max-width: 768px) {<br>
+                            .navbar-nav {<br>
+                                display: none;<br>
+                            }<br><br>
+                            .menu-toggle:checked + .navbar-nav {<br>
+                                display: block;<br>
+                            }<br><br>
+                        }
+                    </code>
+                    <br><br>
+                </p>
+            </div>
+        </div>
+        <!-- footer section start -->
+        <footer>
+            <div class="section_footer">
+                <div class="container">
+                    <div class="social_icon">
+                        <ul>
+                            <li><a href="#"><img src="images/fb-icon.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/twitter-icon.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/linkdin-icon.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/instagram-icon.png" alt=""></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright_section">
+                <div class="container">
+                <p class="copyright_text">
+                    <a href="https://www.swinburne.edu.au/">&copy; Swinburne University of Technology</a>
+                    <br> 
+                    <a href="mailto:someone@example.com"> Created by: Panharith Menh</a>
+                </p>
+                </div>
+            </div>
+        </footer>
+        <!-- footer section end -->
+    </body>
+</html>

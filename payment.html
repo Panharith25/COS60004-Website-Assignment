@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Assignment 1">
+        <meta name="keywords" content="HTML, CSS">
+        <meta name="author" content="Panharith Menh">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- CSS link -->
+        <link href="styles/style.css" rel="stylesheet">
+        <link href="styles/responsive.css" rel="stylesheet">
+        <!-- Script link -->
+        <script src="scripts/payment.js"></script>
+        <!-- Title -->
+        <title>Gamepad | Payment</title>
+    </head>
+
+    <body>
+        <!-- navigation section start -->
+        <div class="header_section">
+            <div class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="logo">
+                    <a href="index.html"><img src="images/logo.png" alt=""></a>
+                </div>
+                <!-- Checkbox for toggling the menu -->
+                <input type="checkbox" id="menu-toggle" class="menu-toggle">
+                <label for="menu-toggle" class="menu-icon">&#9776;</label> <!-- Hamburger icon -->
+                <nav class="navbar-collapse">
+                    <ul class="navbar-nav">
+                        <li class="nav-link"><a href="index.html">Home</a></li>
+                        <li class="nav-link"><a href="product.html">Products</a></li>
+                        <li class="nav-link"><a href="enquire.html">Enquire</a></li>
+                        <li class="nav-link"><a href="about.html">About</a></li>
+                        <li class="nav-link"><a href="enhancements.html">Enhancements</a></li>
+                        <li class="nav-link"><a href="reference.html">Reference</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <hr>
+        </div>
+        <!-- navigation section end-->
+        <!-- form section start -->
+        <section class="form_section layout_padding">
+            <div class="container">
+                <h1 class="section_title">Payment Details</h1>
+
+                <!-- Enquiry Details -->
+                    <table id="enquiryDetailsTable" class="enquiry_details_table">
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="enquiryDetailsBody">
+                            <!-- Data will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+
+                <!-- Payment Form -->
+                <form id="paymentForm" method="post" action="http://mercury.swin.edu.au/it000000/formtest.php">
+                    <!-- Credit Card Information -->
+                    <fieldset>
+                        <legend>Credit Card Information</legend>
+                        <div class="form_group">
+                            <label for="card_type">Credit Card Type *</label>
+                            <select id="card_type" name="card_type" required>
+                                <option value="" disabled selected>Select Card Type</option>
+                                <option value="visa">Visa</option>
+                                <option value="mastercard">Mastercard</option>
+                                <option value="amex">American Express</option>
+                            </select>
+                            <span id="cardTypeError" style="color: red; display: none;"></span>
+                        </div>
+                        <div class="form_group">
+                            <label for="card_name">Name on Card *</label>
+                            <input type="text" id="card_name" name="card_name" required>
+                            <span id="cardNameError" style="color: red; display: none;"></span>
+                        </div>
+                        <div class="form_group">
+                            <label for="card_number">Card Number *</label>
+                            <!-- <input type="text" id="card_number" name="card_number" pattern="\d{16}" title="Enter a 16-digit card number" required> -->
+                            <input type="text" id="card_number" name="card_number" maxlength="19" title="Enter a 16-digit card number" required>
+                            <span id="cardNumberError" style="color: red; display: none;"></span>
+                        </div>
+                        <div class="form_group">
+                            <label for="expiry_date">Expiry Date (MM-YY) *</label>
+                            <input type="text" id="expiry_date" name="expiry_date" pattern="\d{2}-\d{2}" title="Enter in MM-YY format" required>
+                            <span id="expiryDateError" style="color: red; display: none;"></span>
+                        </div>
+                        <div class="form_group">
+                            <label for="cvv">CVV *</label>
+                            <!-- <input type="text" id="cvv" name="cvv" pattern="\d{3}" title="Enter a 3-digit CVV" required> -->
+                            <input type="text" id="cvv" name="cvv" title="Enter a 3-digit CVV" required>
+                            <span id="cvvError" style="color: red; display: none;"></span>
+                        </div>
+                    </fieldset>
+
+                    <!-- Submit and Reset Buttons -->
+                    <div class="submit_group">
+                        <input type="submit" onclick="submitToPHP()" value="Check-Out">
+                        <button type="button" class="button_action" id="cancelOrderButton">Cancel Order</button>
+                        <!-- <input type="reset" value="Reset Form"> -->
+                    </div>
+                </form>
+            </div>
+        </section>
+        <!-- form section end -->
+        <!-- footer section start -->
+        <footer>
+            <div class="section_footer">
+                <div class="container">
+                    <div class="social_icon">
+                        <ul>
+                            <li><a href="#"><img src="images/fb-icon.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/twitter-icon.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/linkdin-icon.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/instagram-icon.png" alt=""></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright_section">
+                <div class="container">
+                    <p class="copyright_text">
+                        <a href="https://www.swinburne.edu.au/">&copy; Swinburne University of Technology</a>
+                        <br> 
+                        <a href="mailto:someone@example.com"> Created by: Panharith Menh</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+        <!-- footer section end -->
+    </body>
+</html>

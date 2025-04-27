@@ -2,7 +2,7 @@
 filename: [style.css]
 author: [Panharith Menh]
 created: 20/03/2025
-last modified: 21/04/2025
+last modified: 25/04/2025
 description: [This is css file for all html files]
 */
 
@@ -682,21 +682,6 @@ textarea::placeholder {
 .button_action:hover {
     background-color: #3a8edb;
 }
-/* #payNowButton {
-    background-color: #5ca0e9;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-right: 10px;
-    transition: background-color 0.3s ease;
-}
-/* Add hover effect to match the reset button behavior */
-/* #payNowButton:hover {
-    background-color: #3a8edb;
-} */
 /* Submit Button Styling */
 .submit_group {
     text-align: left;
@@ -1024,6 +1009,40 @@ textarea::placeholder {
     text-decoration: underline;
 }
 
+.enhancement-tabs {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    position: relative;
+}
+
+.enhancement-tabs .tab {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #000;
+    border: 1px solid #ccc;
+    background-color: #f8f9fa;
+    margin: 0 5px;
+    border-radius: 5px 5px 0 0; /* Rounded corners for the top */
+    font-size: 20px;
+    
+    position: relative;
+    top: 2px; /* Align tabs slightly above the bottom line */
+}
+
+.enhancement-tabs .tab:hover {
+    background-color: #e9ecef;
+    color: #007bff;
+}
+
+.enhancement-tabs .tab.active {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+    border-bottom: 2px solid #007bff; /* Matches the bottom line color */
+    position: relative;
+}
+
 /* Reference html file */
 .reference_section {
     padding: 40px 20px;
@@ -1093,4 +1112,12 @@ textarea::placeholder {
 
 .enquiry_details_table td {
     background-color: #ffffff; /* White background for table cells */
+}
+
+.timer_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* Adjust height as needed */
+    margin-bottom: 20px; /* Add spacing below the timer */
 }

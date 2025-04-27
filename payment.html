@@ -2,8 +2,8 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta name="description" content="Assignment 1">
-        <meta name="keywords" content="HTML, CSS">
+        <meta name="description" content="Assignment 2 - Payment Page">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
         <meta name="author" content="Panharith Menh">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- CSS link -->
@@ -16,7 +16,7 @@
     </head>
 
     <body>
-        <!-- navigation section start -->
+        <!-- navigation section -->
         <div class="header_section">
             <div class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="logo">
@@ -38,11 +38,16 @@
             </div>
             <hr>
         </div>
-        <!-- navigation section end-->
+         
         <!-- form section start -->
         <section class="form_section layout_padding">
             <div class="container">
                 <h1 class="section_title">Payment Details</h1>
+
+                <!-- Timer Display -->
+                <div class="timer_container">
+                    <div id="timerDisplay" style="color: red; font-weight: bold; margin-bottom: 10px;"></div>
+                </div>
 
                 <!-- Enquiry Details -->
                     <table id="enquiryDetailsTable" class="enquiry_details_table">
@@ -98,7 +103,8 @@
 
                     <!-- Submit and Reset Buttons -->
                     <div class="submit_group">
-                        <input type="submit" onclick="submitToPHP()" value="Check-Out">
+                        <!-- <input type="submit" onclick="submitToPHP()" value="Check-Out"> -->
+                        <input type="submit" value="Check-Out">
                         <button type="button" class="button_action" id="cancelOrderButton">Cancel Order</button>
                         <!-- <input type="reset" value="Reset Form"> -->
                     </div>

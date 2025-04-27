@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Assignment 2 - Enhancements">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="Panharith Menh">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- CSS link -->
+        <link href="styles/style.css" rel="stylesheet">
+        <link href="styles/responsive.css" rel="stylesheet">
+
+        <!-- Script -->
+        <script src="scripts/enhancements2.js"></script>
+
+        <!-- JQuery CSS link-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css">
+        <!-- JQuery link -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
+
+        <!-- Title -->
+        <title>Gamepad | Enhancement 2</title>
+    </head>
+
+    <body>
+        <!-- Navigation section -->
+        <div class="header_section">
+            <div class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="logo">
+                    <a href="index.html"><img src="images/logo.png" alt=""></a>
+                </div>
+                <!-- Checkbox for toggling the menu -->
+                <input type="checkbox" id="menu-toggle" class="menu-toggle">
+                <label for="menu-toggle" class="menu-icon">&#9776;</label> <!-- Hamburger icon -->
+                <nav class="navbar-collapse">
+                    <ul class="navbar-nav">
+                        <li class="nav-link"><a href="index.html">Home</a></li>
+                        <li class="nav-link"><a href="product.html">Products</a></li>
+                        <li class="nav-link"><a href="enquire.html">Enquire</a></li>
+                        <li class="nav-link"><a href="about.html">About</a></li>
+                        <li class="nav-link"><a href="enhancements.html">Enhancements</a></li>
+                        <li class="nav-link"><a href="reference.html">Reference</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <hr>
+
+        <!-- Enhancement tabs -->
+        <div class="enhancement-tabs">
+            <div class="container">
+                <a href="enhancements.html" class="tab">Enhancement 1</a>
+                <a href="enhancements2.html" class="tab active">Enhancement 2</a>
+            </div>
+        </div>
+        
+        <!-- Body -->
+        <div class="enhancement_section layout_padding">
+            <div class="container">
+                <section>
+                    <!-- Enhancement 1 -->
+                    <h1>Enhancement 1: Allow user to add more than one product</h1>
+                    <p>
+                        As part of my project, I added a feature that lets users choose more than one product and add 
+                        them to a cart. The total amount updates automatically, and the chosen products are saved for 
+                        the next steps. This was not taught by my lecturer, but I wanted to make my website more user-friendly 
+                        and show that I can do more than the basics. I used JavaScript to make the page respond to user 
+                        actions without refreshing.
+                    </p>
+                    <h2>Why did I add this product selection feature?</h2>
+                    <p>
+                        I wanted to make it easier for users to pick products. Instead of showing all products on the main 
+                        form, I used a pop-up (modal) so they can focus on selecting what they want, then return to the main 
+                        form when done. This way, they can see all products at once and choose multiple items without cluttering the main page.
+                    </p>
+                    <h2>How does it work?</h2>
+                    <p>
+                        When users click the "Add to Cart" button, a pop-up appears with a list of products. They can select 
+                        multiple products and see the total amount update in real-time. Once they finish selecting, they can 
+                        close the pop-up and continue with their order.
+                    </p>
+
+                    <!-- Checkbox Product -->
+                    <h3>1. Checkbox Product Selection</h3>
+                    <p>
+                        When the user clicks the “Add Products” button, a pop-up appears showing products with checkboxes. 
+                        Each product has a name and price. The checkboxes let users choose one or more products they want 
+                        to add.
+                    </p>
+                    <h4>Sample Code</h4>
+                    <pre>
+                        <code>
+                            &lt;input type="checkbox" data-id="product1" id="product_dualsense" name="product_name" value="DualSense Wireless Controller" data-price="99.99"&gt;
+                        </code>
+                    </pre>
+                    <p>
+                        I used data-id and data-price to keep track of each product's unique info. You can check this in the
+                        <a href="enquire.html" class="enhancement_link">Enquire Page</a> file. The data-id is used to identify the product, and the data-price is used to calculate the total price.
+                        This way, when the user selects a product, the system knows exactly which one it is and how much it costs.
+                    </p>
+
+                    <!-- Add Products to Cart Button -->
+                    <h3>2. Add Products to Cart</h3>
+                    <p>
+                        When the user clicks “Add to Cart”, JavaScript collects all selected checkboxes. It checks if the product is already in the cart, and if not, it creates a small cart item with:
+                    </p>
+                    <ul>
+                        <li>Product name and price</li>
+                        <li>A number input for quantity (1–10)</li>
+                        <li>A “Remove” button</li>
+                        <li>Hidden inputs to send the product info when the form is submitted</li>
+                    </ul>
+                    <h4>Sample Code:</h4>
+                    <pre>
+                        <code>
+                            addToCartButton.addEventListener('click', () => {
+                                const selectedProducts = document.querySelectorAll('input[type="checkbox"][name="product_name"]:checked');
+                        
+                                selectedProducts.forEach((checkbox) => {
+                                    const productId = checkbox.id;
+                                    const productName = checkbox.value;
+                                    const productPrice = parseFloat(checkbox.getAttribute('data-price'));
+                        
+                                    // Check if the product is already in the cart
+                                    let cartItem = cartItems.querySelector(`.cart_item[data-id="${productId}"]`);
+                                    if (!cartItem) {
+                                        // Add new product to the cart table
+                                        cartItem = document.createElement('div');
+                                        cartItem.classList.add('cart_item');
+                                        cartItem.setAttribute('data-id', productId);
+                                        cartItem.innerHTML = `
+                                        &lt;span&gt;${productName} ($${productPrice.toFixed(2)})&lt;/span&gt;
+                                        &lt;input type="number" class="quantity_input" min="1" max="10" value="1" data-price="${productPrice}"&gt;
+                                        &lt;button type="button" class="remove_button"&gt;Remove&lt;/button&gt;
+                                        `;
+                                        cartItems.appendChild(cartItem);
+                                        cartBox.style.display = 'block';
+                        
+                                        hiddenInputsContainer.innerHTML += `
+                                        &lt;input type="hidden" name="products[${productId}][name]" value="${productName}">
+                                        &lt;input type="hidden" name="products[${productId}][price]" value="${productPrice}">
+                                        &lt;input type="hidden" name="products[${productId}][quantity]" value="1">
+                                        `;
+                                    }
+                        
+                                    // Uncheck the checkbox after adding to the cart
+                                    checkbox.checked = false;
+                                });
+                        
+                                productSelectionModal.style.display = 'none'; // Hide the product selection modal
+                                addProductsButton.textContent = 'Add Products'; // Reset the "Add Products" button
+                                addProductsButton.disabled = false;
+                        
+                                calculateTotalPrice(); // Calculate the total price depending on the amount of items added
+                            });
+                        </code>
+                    </pre>
+                    <p>
+                        This code listens for clicks on the “Add to Cart” button. It collects all selected checkboxes and adds 
+                        them to the cart. If a product is already in the cart, it updates the quantity instead of adding it again.
+                        The cart box shows up when items are added, and the total price is calculated based on the selected products.
+                        The hidden inputs are created to send the product info when the form is submitted. This makes it easy for the server to process the order later.
+                    </p>
+
+                    <!-- Remove Products button-->
+                    <h3>3. Remove Products from Cart</h3>
+                    <p>
+                        This part allows users to remove a product from the cart after they add it. When the “Remove” button is clicked:
+                    </p>
+                    <ul>
+                        <li>The product is removed from the cart section</li>
+                        <li>The checkbox becomes visible again in the product modal</li>
+                        <li>The cart hides if no products are left</li>
+                    </ul>
+                    <h4>Sample Code:</h4>
+                    <pre>
+                        <code>
+                            cartItems.addEventListener('click', (event) => {
+                                if (event.target.classList.contains('remove_button')) {
+                                    const cartItem = event.target.closest('.cart_item');
+                                    const productId = cartItem.getAttribute('data-id');
+                                    cartItems.removeChild(cartItem);
+                            
+                                    // Show the checkbox again
+                                    const checkbox = document.getElementById(productId);
+                                    if (checkbox) checkbox.parentElement.style.display = 'block';
+                            
+                                    if (cartItems.children.length === 0) {
+                                        cartBox.style.display = 'none'; // Hide cart box if empty
+                                    }
+                            
+                                    calculateTotalPrice(); // Recalculate after removing
+                                }
+                            });
+                            
+                        </code>
+                    </pre>
+                    <p>
+                        This code listens for clicks on the “Remove” button. When clicked, it removes the product from the cart 
+                        and shows the checkbox again in the product modal.
+                        It also hides the cart if there are no products left. This makes it easy for users to manage their
+                        selections and keep the cart organized.
+                    </p>
+
+                    <!-- Alert users that no more item can be added -->
+                    <h3>4. Alert users that no more item can be added from the add to cart</h3>
+                    <p>
+                        I added a feature that alerts users when there is no more item to add from the add to cart.
+                        This is done by checking if the cart is empty or not. If it is empty, an alert message will 
+                        be shown to the user.
+                    </p>
+                    <h4>Sample Code:</h4>
+                    <pre>
+                        <code>
+                            if (cartItems.children.length === 0) {
+                                alert('No more items to add from the add to cart!');
+                            }
+                        </code>
+                    </pre>
+                    <p>
+                        This is a simple way to let users know that they cannot add more items from the add to cart.
+                        It helps them understand the current state of their cart and prevents confusion.
+                    </p>
+                    <hr>
+                </section>
+                
+                <section>
+                    <!-- Enhancement 2: Button to change image -->
+                    <h1 id="enhancement2">Enhancement 2: Button to change image</h1>
+                    <p>
+                        I added a button that changes the product image when clicked. This makes it easier for users to see 
+                        different views of the product without leaving the page. The button is located next to the product
+                        image, and when clicked, it changes the image to a different one. This is done using JavaScript to
+                        dynamically change the image source. The new image is displayed immediately, allowing users to see
+                        the new view without refreshing the page.
+                    </p>
+                    <h2>Why did I add this feature?</h2>
+                    <p>
+                        I wanted to make the product page more interactive and engaging. By allowing users to change the 
+                        product image, they can see different colors of the product without navigating away from 
+                        the page. This enhances the user experience and helps them make informed decisions.
+                    </p>
+                    <h2>How does it work?</h2>
+                    <p>
+                        When the user clicks the "Change Image" button, JavaScript changes the source of the product image 
+                        to a different one. This is done using an event listener that listens for clicks on the button. 
+                        The image source is updated dynamically, allowing users to see the new image without refreshing the page.
+                    </p>
+                    <h3>The Button interaction is located at:</h3>
+                    <ul>
+                        <li><a href="./sections/topic-1.html" class="enhancement_link">Xbox Elite Wireless Controller Series 2</a></li>
+                        <li><a href="./sections/topic-2.html" class="enhancement_link">DualSense Wireless Controller - PS5</a></li>
+                    </ul>
+                    <h3>Sample Code:</h3>
+                    <pre>
+                        <code>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                const colorInputs = document.querySelectorAll(".color_choose input");
+                            
+                                colorInputs.forEach(function(input) {
+                                    input.addEventListener("click", function() {
+                                        const controllerColor = this.getAttribute("data-image");
+                            
+                                        //Remove "active" class from the currently active elements
+                                        document.querySelectorAll(".active").forEach(function(activeElement) {
+                                            activeElement.classList.remove("active");
+                                        });
+                            
+                                        // Add "active" class to the corresponding image
+                                        const targetImage = document.querySelector('.left_column img[data-image="' + controllerColor + '"]');
+                                        if (targetImage) {
+                                            targetImage.classList.add("active");
+                                        }
+                            
+                                        // Add "active" class to the clicked input
+                                        this.classList.add("active");
+                                    });
+                                });
+                            });
+                        </code>
+                    </pre>
+                    <p>
+                        This code listens for clicks on the color input buttons. When a button is clicked, it removes the 
+                        "active" class from all elements and adds it to the corresponding image. This way, users can see 
+                        the new image immediately without refreshing the page.
+                        The "active" class is used to highlight the selected image and make it visually distinct from the others.
+                        This makes it clear to users which image they are currently viewing.
+                    </p>
+                    <hr>
+                </section>
+                
+                <section>
+                    <!-- Enhancement 3: Timer -->
+                <h1>Enhancement 3: Timer</h1>
+                <p>
+                    I added a timer that counts down from 5 minutes. This timer is displayed on the page and
+                    updates every second. It helps users keep track of time while they are on the page. The timer is
+                    useful for users who need to complete their tasks within a certain time frame.
+                </p>
+                <h2>Why did I add this feature?</h2>
+                <p>
+                    I wanted to help users manage their time while they are on the page. The timer counts down from 5 
+                    minutes, giving users a clear indication of how much time they have left.
+                </p>
+                <h2>How does it work?</h2>
+                <p>
+                    The code sets up a timer that counts down from 5 minutes. It shows an alert when there is 1 minute 
+                    and 30 seconds left, and when the time is up, it redirects the user to the home page and resets the 
+                    data in the enquire page. This helps users stay on track and ensures they complete their tasks within 
+                    the given time frame.
+                </p>
+                <h3>Sample Code:</h3>
+                    <pre>
+                        <code>
+                            const timerInterval = setInterval(() => {
+                                timeRemaining--;
+                        
+                                // Show alert at 1 minute and 30 seconds remaining
+                                if (timeRemaining === 90 && !alertShown) {
+                                    alert('You have 1 minute and 30 seconds remaining to complete the payment.');
+                                    alertShown = true;
+                                }
+                        
+                                // Redirect to home page if time runs out
+                                if (timeRemainingn &lt;= 0) {
+                                    clearInterval(timerInterval);
+                                    alert('Time is up! Redirecting to the home page.');
+                                    resetPaymentData();
+                                    window.location.href = 'index.html'; // Redirect to the home page
+                                }
+                        
+                                updateTimerDisplay();
+                            }, 1000);
+                        </code>
+                    </pre>
+                    <hr>
+                </section>
+                
+                <section>
+                    <!-- Enhancement 4: JQuery Alert Message -->
+                <h1>Enhancement 4: JQuery Alert Message</h1>
+                <h2>Why did I want to add this feature?</h2>
+                <p>
+                    At first, I wanted to add JQuery UI to create a pop-up message when the user clicks the "Pay Now" button.
+                    However, I found out that JQuery is not needed for the assignment 2. So, I decided to put the JQuery UI
+                    in the enhancement page instead. The main purpose of this enhancement is to show how to use JQuery UI to 
+                    create a pop-up message. To add on, if I do it in just JavaScript, it will be too long and complicated.
+                    This is why I wanted to use JQuery UI to create a pop-up message that will show when the user clicks the 
+                    "Pay Now" button, but I will not be using it in the assignment 2. I will just show how to use it in the enhancement page.
+                </p>
+                <button id="customAlertButton" class="enhancement_button">Pay Now</button>
+                <h3>Sample Code:</h3>
+                    <pre>
+                        <code>
+                            document.addEventListener('DOMContentLoaded', () => {
+                                console.log('Enhancements2.js loaded successfully.');
+                            
+                                // Add event listener to the custom alert button
+                                const customAlertButton = document.getElementById('customAlertButton');
+                                if (customAlertButton) {
+                                    customAlertButton.addEventListener('click', () => {
+                                        console.log('Custom Alert Button Clicked');
+                                        $.confirm({
+                                            title: '&lt;strong>Action Required&lt;/strong>',
+                                            content: `
+                                            &lt;p style="font-size: 16px; color: #333;">
+                                                    Please ensure all required fields are filled out correctly before proceeding.
+                                            &lt;/p>
+                                                &lt;ul style="text-align: left; margin-top: 10px; color: #555;">
+                                                    &lt;li>Check that your personal details are complete.&lt;/li>
+                                                    &lt;li>Ensure at least one product is added to the cart.&lt;/li>
+                                                    &lt;li>Review your comments or special instructions.&lt;/li>
+                                                &lt;/ul>
+                                            `,
+                                            type: 'blue',
+                                            boxWidth: '40%',
+                                            useBootstrap: false,
+                                            buttons: {
+                                                confirm: {
+                                                    text: 'OK',
+                                                    btnClass: 'btn-blue',
+                                                    action: function () {
+                                                        console.log('User acknowledged the alert.');
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    });
+                                } else {
+                                    console.error('Custom Alert Button not found.');
+                                }
+                            });
+                        </code>
+                    </pre>
+                    <p>
+                        I have provided a link to the JQuery UI website for you to check out how to use it.
+                        <a href="https://craftpip.github.io/jquery-confirm/" class="enhancement_link">JQuery UI Dialog</a>
+                    </p>
+                    <hr>
+                </section>
+                
+                <section>
+                    <!-- Enhancement 5 -->
+                    <h1>Enhancement 5: JQuery Change Button Images</h1>
+                    <p>
+                        Another JQuery enhancement that I wanted to add, but not required for the assignment, is to change the
+                        product images when the user clicks on the color buttons. This is done using JQuery to change the image source
+                        dynamically. The code listens for clicks on the color input buttons and changes the product image to
+                        the corresponding color. However, I found that this feature is not necessary for the assignment, so I decided to
+                        translate JQuery to JavaScript instead. You can check it at my <a href="#enhancement2" class="enhancement_link"><strong>Enhancement 2: Button to change image</strong></a> 
+                        section where I have provided the code.
+                    </p>
+                    <h2>Why did I want to use JQuery instead of JavaScript?</h2>
+                    <h3>Sample Code:</h3>
+                    <pre>
+                        <code>
+                            $(document).ready(function() {
+                                $('.color_choose input').on('click', function() {
+                                    var controllerColor = $(this).attr('data-image');
+                                    $('.active').removeClass('active');
+                                    $('.left_column img[data-image = ' + controllerColor + ']').addClass('active');
+                                    $(this).addClass('active');
+                                });
+                            });
+                        </code>
+                    </pre>
+                    <p>
+                        Comparing to the JavaScript code, the JQuery code is much shorter and easier to read. This is one of the reasons 
+                        why I wanted to use JQuery for this enhancement. Also, JQuery has a lot of built-in functions that make it easier 
+                        to manipulate the DOM and handle events.
+                    </p>
+                    <hr>
+                </section>
+            </div>
+        </div>
+
+        <!-- footer section start -->
+        <footer>
+            <div class="section_footer">
+                <div class="container">
+                    <div class="social_icon">
+                        <ul>
+                            <li><a href="#"><img src="images/fb-icon.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/twitter-icon.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/linkdin-icon.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/instagram-icon.png" alt=""></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright_section">
+                <div class="container">
+                <p class="copyright_text">
+                    <a href="https://www.swinburne.edu.au/">&copy; Swinburne University of Technology</a>
+                    <br> 
+                    <a href="mailto:someone@example.com"> Created by: Panharith Menh</a>
+                </p>
+                </div>
+            </div>
+        </footer>
+        <!-- footer section end -->
+    </body>
+</html>

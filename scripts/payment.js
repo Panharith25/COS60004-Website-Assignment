@@ -11,6 +11,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Retrieve the data from sessionStorage
     const enquiryData = JSON.parse(sessionStorage.getItem('enquiryFormData'));
+    console.log('Enquiry Data:', enquiryData); // Debugging line
 
     if (enquiryData) {
         const enquiryDetailsBody = document.getElementById('enquiryDetailsBody');
@@ -22,7 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
             { field: 'Email', value: enquiryData.email },
             { field: 'Phone', value: enquiryData.phone },
             { field: 'State', value: enquiryData.state },
-            { field: 'Postcode', value: enquiryData.postcode }
+            { field: 'Postcode', value: enquiryData.postcode },
+            { field: 'Street', value: enquiryData.street },
+            { field: 'Suburb', value: enquiryData.suburb },
+            { field: 'Preferred Contact', value: enquiryData.preferred_contact },
+            { field: 'Comment', value: enquiryData.comment }
         ];
 
         customerDetails.forEach(detail => {
@@ -34,19 +39,42 @@ document.addEventListener('DOMContentLoaded', () => {
             enquiryDetailsBody.appendChild(row);
         });
 
+        // This section is commented out as it is not used in the current implementation, this is to remove conflict with the new product details section.
         // Add product details
-        enquiryData.products.forEach((product, index) => {
+        // if (enquiryData.products && enquiryData.products.length > 0) {
+        //     enquiryData.products.forEach((product, index) => {
+        //         const row = document.createElement('tr');
+        //         row.innerHTML = `
+        //             <td>Product ${index + 1}</td>
+        //             <td>${product}</td>
+        //         `;
+        //         enquiryDetailsBody.appendChild(row);
+        //     });
+        // } else {
+        //     const row = document.createElement('tr');
+        //     row.innerHTML = `
+        //         <td colspan="2">No products found.</td>
+        //     `;
+        //     enquiryDetailsBody.appendChild(row);
+        // }
+
+        // This section is added to display the product details in a more structured way.
+        // Check if products exist in the enquiry data
+        // Add product details
+        let productIndex = 1;
+        while (enquiryData[`product_${productIndex}_name`] && enquiryData[`product_${productIndex}_quantity`]) {
+            const productName = enquiryData[`product_${productIndex}_name`];
+            const productQuantity = enquiryData[`product_${productIndex}_quantity`];
+
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>Product ${index + 1}</td>
-                <td>
-                    Name: ${product.name}, 
-                    Quantity: ${product.quantity}, 
-                    Price: $${parseFloat(product.price).toFixed(2)}
-                </td>
+                <td>Product ${productIndex}</td>
+                <td>${productName} (Quantity: ${productQuantity})</td>
             `;
             enquiryDetailsBody.appendChild(row);
-        });
+
+            productIndex++;
+        }
 
         // Add total price
         const totalPriceRow = document.createElement('tr');
@@ -62,6 +90,70 @@ document.addEventListener('DOMContentLoaded', () => {
             <p style="color: red;">No enquiry data found. Please go back to the enquiry page and fill out the form.</p>
         `;
     }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const paymentForm = document.getElementById('paymentForm');
+    const timerDisplay = document.createElement('div'); // Timer display element
+    timerDisplay.id = 'timerDisplay';
+    timerDisplay.style.color = 'red';
+    timerDisplay.style.fontWeight = 'bold';
+    timerDisplay.style.marginBottom = '10px';
+    paymentForm.parentElement.insertBefore(timerDisplay, paymentForm);
+
+    let timeRemaining = 300; // 5 minutes in seconds
+    let alertShown = false;
+
+    // Update the timer display
+    function updateTimerDisplay() {
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        timerDisplay.textContent = `Time Remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }
+
+    // Handle timer countdown
+    const timerInterval = setInterval(() => {
+        timeRemaining--;
+
+        // Show alert at 1 minute and 30 seconds remaining
+        if (timeRemaining === 90 && !alertShown) {
+            alert('You have 1 minute and 30 seconds remaining to complete the payment.');
+            alertShown = true;
+        }
+
+        // Redirect to home page if time runs out
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert('Time is up! Redirecting to the home page.');
+            resetPaymentData();
+            window.location.href = 'index.html'; // Redirect to the home page
+        }
+
+        updateTimerDisplay();
+    }, 1000);
+
+    // Reset payment data
+    function resetPaymentData() {
+        // Clear sessionStorage and localStorage
+        sessionStorage.removeItem('enquiryFormData');
+        localStorage.removeItem('enquiryFormData');
+
+        // Reset the payment form
+        paymentForm.reset();
+    }
+
+    // Cancel order button functionality
+    const cancelOrderButton = document.getElementById('cancelOrderButton');
+    cancelOrderButton.addEventListener('click', () => {
+        if (confirm('Are you sure you want to cancel the order?')) {
+            clearInterval(timerInterval); // Stop the timer
+            resetPaymentData();
+            window.location.href = 'index.html'; // Redirect to the home page
+        }
+    });
+
+    // Initialize the timer display
+    updateTimerDisplay();
 });
 
 /**
@@ -148,8 +240,15 @@ function validatePaymentForm() {
 function submitToPHP(event) {
     event.preventDefault(); // Prevent default form submission
 
+    // Confirm if the user wants to proceed with the checkout
+    const userConfirmed = confirm('Do you want to proceed with the checkout? Please ensure your card details are correct.');
+    if (!userConfirmed) {
+        return; // Exit if the user cancels
+    }
+
     // Validate the payment form
     if (!validatePaymentForm()) {
+        alert('Please correct the errors in the payment form before proceeding.');
         return;
     }
 

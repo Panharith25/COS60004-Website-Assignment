@@ -1,9 +1,12 @@
 /**
  * Author: Panharith Menh
  * Target: enquire.html
- * Purpose: This file is enquiry form validation
+ * Purpose: This file is enquiry form validation and cart functionality for the enquiry form.
  * Created: 15/04/2025
- * Last Modified: 22/04/2025
+ * Last Modified: 26/04/2025
+ * Description: This file contains functions to validate the enquiry form fields, including first name, last name, 
+ *               email, phone number, state and postcode, preferred contact method, street address, suburb, and comment. 
+ *               It also handles the cart functionality for adding products to the cart and calculating the total price.
  */
 
 'use strict';
@@ -42,31 +45,26 @@ function validateEmail() {
 
 /**
  * Validates the phone number input.
- * - The phone number must match the Australian format:
- *   - Mobile: Starts with +61 followed by 9 digits (e.g., +61412345678)
- *   - Mobile: Starts with 04 followed by 8 digits (e.g., 0412345678)
+ * - The phone number must start with either +61 or 0.
+ * - Format:
+ *   - +61 followed by 9 digits (e.g., +61 433 345 678 or +61-433-345-678)
+ *   - 0 followed by 9 digits (e.g., 0433 345 678 or 0433345678)
  */
-// function validatePhoneNumber() {
-//     const phoneInput = document.getElementById('phone');
-//     const phoneRegex = /^(?:\+61|04)\d{8}$/; // Matches +61XXXXXXXXX or 04XXXXXXXX
-//     return phoneRegex.test(phoneInput.value.trim());
-// }
 function validatePhoneNumber() {
     const phoneInput = document.getElementById('phone');
-    const phoneRegex = /^(?:\+61-\d{3} \d{3} \d{3}|0\d{3} \d{3} \d{3})$/;
-    // Matches +61-433 123 456 or 0433 123 456
+    const phoneRegex = /^(?:\+61[- ]?\d{1,4}[- ]?\d{3}[- ]?\d{3}|0\d{1,4}[- ]?\d{3}[- ]?\d{3})$/; // Matches +61-433 123 456 or 0433 123 456
     const phoneValue = phoneInput.value.trim();
+
+    const phoneError = document.getElementById('phoneError');
 
     if (!phoneRegex.test(phoneValue)) {
         // Display an error message if the phone number is invalid
-        const phoneError = document.getElementById('phoneError');
-        phoneError.textContent = 'Invalid phone number format. Use +61-433 123 456 or 0433 123 456.';
+        phoneError.textContent = 'Invalid phone number format. Use +61 433 345 678 or 0433 345 678.';
         phoneError.style.display = 'block';
         return false;
     }
 
     // Hide the error message if the phone number is valid
-    const phoneError = document.getElementById('phoneError');
     phoneError.textContent = '';
     phoneError.style.display = 'none';
     return true;
@@ -136,6 +134,10 @@ function validateForm(event) {
     const lastNameError = document.getElementById('lastNameError');
     const emailError = document.getElementById('emailError');
     const phoneError = document.getElementById('phoneError');
+    const preferredContactError = document.getElementById('preferredContactError');
+    const streetError = document.getElementById('streetError');
+    const suburbError = document.getElementById('suburbError');
+    const commentError = document.getElementById('commentError');
 
     let isValid = true;
 
@@ -188,12 +190,59 @@ function validateForm(event) {
         isValid = false;
     }
 
-    if (!isValid) {
-        event.preventDefault();
-        return false;
+    // Validate preferred contact
+    const preferredContact = document.getElementById('preferred_contact').value;
+    if (preferredContact === '') {
+        isValid = false;
+        preferredContactError.textContent = 'Please select a preferred contact method.';
+        preferredContactError.style.display = 'block';
+        document.getElementById('preferred_contact').focus();
+    } else {
+        preferredContactError.textContent = '';
+        preferredContactError.style.display = 'none';
     }
 
-    return true;
+    // Validate street address
+    const street = document.getElementById('street').value.trim();
+    if (street === '') {
+        isValid = false;
+        streetError.textContent = 'Please enter a valid street address.';
+        streetError.style.display = 'block';
+        document.getElementById('street').focus();
+    } else {
+        streetError.textContent = '';
+        streetError.style.display = 'none';
+    }
+
+    // Validate suburb
+    const suburb = document.getElementById('suburb').value.trim();
+    if (suburb === '') {
+        isValid = false;
+        suburbError.textContent = 'Please enter a valid suburb or town.';
+        suburbError.style.display = 'block';
+        document.getElementById('suburb').focus();
+    } else {
+        suburbError.textContent = '';
+        suburbError.style.display = 'none';
+    }
+
+    // Validate comment
+    const comment = document.getElementById('comment').value.trim();
+    if (comment === '') {
+        isValid = false;
+        commentError.textContent = 'Please enter a comment.';
+        commentError.style.display = 'block';
+        document.getElementById('comment').focus();
+    } else {
+        commentError.textContent = '';
+        commentError.style.display = 'none';
+    }
+
+    // Prevent form submission if validation fails
+    if (!isValid && event) {
+        event.preventDefault();
+    }
+    return isValid;
 }
 
 // Add carts validation form
@@ -207,7 +256,13 @@ function initFormValidation() {
         const cartItems = document.getElementById('cart_items');
         if (cartItems.children.length === 0) {
             isValid = false;
-            alert('Please add at least one product to the cart before submitting.');
+            alert('Please add at least one product to the cart before checking out.');
+        }
+
+        // Validate the form before allowing product selection
+        if (!validateForm()) {
+            alert('Please ensure all required fields are filled out correctly before adding products to the cart.');
+            return;
         }
 
         if (!isValid) {
@@ -231,6 +286,8 @@ function initCart() {
 
     // Show product selection modal when "Add Products" button is clicked
     addProductsButton.addEventListener('click', () => {
+        
+
         const checkboxes = document.querySelectorAll('input[type="checkbox"][name="product_name"]');
         let availableProducts = 0;
 
@@ -357,54 +414,70 @@ function initCart() {
     });
 }
 
-function saveFormDataToSession() {
+// Store form data to sessionStorage and localStorage. then redirect to payment page
+function handeleEnquiryFormSubmission() {
+    // Collect form data
     const formData = {
         first_name: document.getElementById('first_name').value.trim(),
         last_name: document.getElementById('last_name').value.trim(),
         email: document.getElementById('email').value.trim(),
         phone: document.getElementById('phone').value.trim(),
+        preferred_contact: document.getElementById('preferred_contact').value,
+        street: document.getElementById('street').value.trim(),
+        suburb: document.getElementById('suburb').value.trim(),
         state: document.getElementById('state').value,
         postcode: document.getElementById('postcode').value.trim(),
+        comment: document.getElementById('comment').value.trim(),
         total_price: document.getElementById('hidden_total_price').value,
-        products: []
+        products: [], // Store product details here, but this data can't be shown on PHP page as it is written as an array
     };
 
+    // So, I will save the product details as individual keys in the formData object
+    // This way, the data can be accessed easily in PHP without needing to parse an array.
+    // Collect product data from the cart
+    let productIndex = 1; // Start indexing products from 1
     document.querySelectorAll('.cart_item').forEach(item => {
-        const productId = item.getAttribute('data-id');
-        // const productId = item.id; // Retrieve the id attribute of the checkbox
-        const name = item.querySelector('span').textContent;
-        const quantity = item.querySelector('.quantity_input').value;
-        const price = item.querySelector('.quantity_input').getAttribute('data-price');
+        const productName = item.querySelector('span').textContent.trim(); // Get product name and price
+        const productQuantity = item.querySelector('.quantity_input').value.trim(); // Get product quantity
 
-        // Add product details to the formData object
-        formData.products.push({
-            id: productId,
-            name,
-            price: parseFloat(price),
-            quantity: parseInt(quantity)
-        });
+        // Save product details as individual keys
+        formData[`product_${productIndex}_name`] = productName;
+        formData[`product_${productIndex}_quantity`] = productQuantity;
+
+        productIndex++;
+    });
+
+    // Collect product data from the cart
+    document.querySelectorAll('.cart_item').forEach(item => {
+        const productName = item.querySelector('span').textContent;
+        const productPrice = parseFloat(item.querySelector('.quantity_input').getAttribute('data-price'));
+        const productQuantity = parseInt(item.querySelector('.quantity_input').value, 10);
+
+        // Format: "DualSense Wireless Controller ($99.99) 2"
+        const productDetails = `${productName} ($${productPrice.toFixed(2)}) ${productQuantity}`;
+        formData.products.push(productDetails);
     });
 
     // Save to localStorage
     localStorage.setItem('enquiryFormData', JSON.stringify(formData));
 
-    // Save to sessionStorage
+    // Save form data to localStorage or sessionStorage
     sessionStorage.setItem('enquiryFormData', JSON.stringify(formData));
+
+    // Redirect to the payment page
+    window.location.href = enquiryForm.action;
 }
 
 function validateCart() {
+    // Validate the form before allowing product selection
+    if (!validateForm()) {
+        alert('Please ensure all required fields are filled out correctly before adding products to the cart.');
+        return;
+    }
     const cartItems = document.querySelectorAll('.cart_item');
     if (cartItems.length === 0) {
         alert('You must select at least one product/service.');
         return false;
-    }
-
-    for (const item of cartItems) {
-        const quantity = parseInt(item.querySelector('.quantity_input').value, 10);
-        if (isNaN(quantity) || quantity <= 0) {
-            alert('Please ensure all selected products/services have a valid quantity.');
-            return false;
-        }
     }
 
     return true;
@@ -412,15 +485,20 @@ function validateCart() {
 
 function init() {
     const payNowButton = document.getElementById('payNowButton');
-    const phoneInput = document.getElementById('phone');
+    const form = document.getElementById('enquiryForm');
 
-    payNowButton.addEventListener('click', function () {
+    payNowButton.addEventListener('click', function (event) {
+        // Prevent default form submission
+        event.preventDefault();
+
+        // Validate form and cart
         if (validateForm() && validateCart()) {
             // Show confirmation dialog
             const userConfirmed = confirm('Do you want to proceed to the payment page?');
             if (userConfirmed) {
-                saveFormDataToSession();
-                window.location.href = 'payment.html'; // Redirect to payment page
+                // Handle form submission
+                handeleEnquiryFormSubmission();
+                form.submit(); // Submit the form programmatically
             } else {
                 alert('You chose to stay on the current page.');
             }
@@ -431,8 +509,6 @@ function init() {
 
     initFormValidation();
     initCart();
-    // Add event listener for phone number formatting
-    phoneInput.addEventListener('input', formatPhoneNumber);
 }
 
 window.onload = init;

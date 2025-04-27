@@ -2,8 +2,8 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta name="description" content="Assignment 1">
-        <meta name="keywords" content="HTML, CSS">
+        <meta name="description" content="Assignment 2 - Enquiry Page">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
         <meta name="author" content="Panharith Menh">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- CSS link -->
@@ -16,7 +16,7 @@
     </head>
 
     <body>
-        <!-- navigation section start -->
+        <!-- navigation section -->
         <div class="header_section">
             <div class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="logo">
@@ -38,14 +38,15 @@
             </div>
             <hr>
         </div>
-        <!-- navigation section end-->
+
         <!-- form section start -->
         <section class="form_section layout_padding">
             <div class="container">
                 <h1 class="section_title">Contact Us</h1>
                 <p class="section_description">Feel free to reach out to us by filling out the form below</p>
                 <!-- <form id="enquiryForm" method="post" action="http://mercury.swin.edu.au/it000000/formtest.php"> -->
-                <form id="enquiryForm" method="post" onsubmit="saveFormDataToSession()">
+                <!-- <form id="enquiryForm" method="post" onsubmit="saveFormDataToSession()"> -->
+                <form id="enquiryForm" method="post" action="payment.html">
                     <!-- Personal Information -->
                     <fieldset>
                         <legend>Personal Information</legend>
@@ -66,7 +67,7 @@
                         </div>
                         <div class="form_group">
                             <label for="phone">Phone Number *</label>
-                            <input class="form_element" type="tel" id="phone" name="phone" placeholder="+61412345678 or 0412345678" required>
+                            <input class="form_element" type="tel" id="phone" name="phone" placeholder="+61-433 345 678 or 0433 345 678" required>
                             <span id="phoneError" style="color: red; display: none;"></span>
                         </div>
                     </fieldset>
@@ -81,11 +82,14 @@
                                 <option value="phone">Phone</option>
                                 <option value="sms">SMS</option>
                             </select>
+                            <span id="preferredContactError" style="color: red; display: none;"></span>
                         </div>
                     </fieldset>
-                    <!-- Product Information-->
+
+                    <!-- Product Information -->
                     <fieldset>
                         <legend>Product Information</legend>
+                        <!-- Add product button -->
                         <div class="form_group">
                             <button type="button" id="add_products_button">Add Products</button>
                         </div>
@@ -131,10 +135,12 @@
                         <div class="form_group">
                             <label for="street">Street Address *</label>
                             <input class="form_element" type="text" id="street" name="street" maxlength="40" pattern="[A-Za-z0-9 ]{1,40}" required>
+                            <span id="streetError" style="color: red; display: none;"></span>
                         </div>
                         <div class="form_group">
                             <label for="suburb">Suburb/Town *</label>
                             <input class="form_element" type="text" id="suburb" name="suburb" maxlength="20" pattern="[A-Za-z0-9 ]{1,20}" required>
+                            <span id="suburbError" style="color: red; display: none;"></span>
                         </div>
                         <div class="form_group">
                             <label for="state">State *</label>
@@ -164,6 +170,7 @@
                         <div class="form_group">
                             <label for="comment">Comment *</label>
                             <textarea class="form_element" id="comment" name="comment" rows="4" placeholder="Enter your comments here" required></textarea>
+                            <span id="commentError" style="color: red; display: none;"></span>
                         </div>
                     </fieldset>
 
